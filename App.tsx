@@ -1,20 +1,28 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+
+import SplashScreen from './src/register/launch';
+import SlideOne from './src/register/0.1.OnBoarding';
+import SlideTwo from './src/register/0.2.OnBoarding';
 
 export default function App() {
+  const [screen, setScreen] = useState('splash');
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <StatusBar style="dark" />
+
+      {screen === 'splash' && (
+        <SplashScreen onFinish={() => setScreen('onboarding1')} />
+      )}
+
+      {screen === 'onboarding1' && (
+        <SlideOne onNext={() => setScreen('onboarding2')} />
+      )}
+
+      {screen === 'onboarding2' && (
+        <SlideTwo onNext={() => console.log('Онбординг завершён')} />
+      )}
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
